@@ -152,7 +152,7 @@ void Led_Init(void) {
 	xTaskCreatePinnedToCore(
 		Led_Task, /* Function to implement the task */
 		"Led_Task", /* Name of the task */
-		2048, /* Stack size in words */
+		3072, /* Stack size in words */ // 20251015: increased to 3072 because saving of "allgemeine Einstellungen" let to restarts because of stack overflows
 		NULL, /* Task input parameter */
 		1, /* Priority of the task */
 		&Led_TaskHandle, /* Task handle. */
@@ -224,7 +224,7 @@ void Led_SetBrightness(uint8_t value) {
 	#endif
 
 	#ifdef MQTT_ENABLE
-	publishMqtt(topicLedBrightnessState, static_cast<uint32_t>(gLedSettings.Led_Brightness), false);
+	publishMqtt(topicLedBrightness, static_cast<uint32_t>(gLedSettings.Led_Brightness), false);
 	#endif
 #endif
 }
@@ -424,7 +424,7 @@ static void Led_Task(void *parameter) {
 			nextAnimation = LedAnimationType::Idle;
 		} else if (gPlayProperties.pausePlay && !gPlayProperties.isWebstream) {
 			nextAnimation = LedAnimationType::Pause;
-		} else if ((gPlayProperties.playMode != BUSY) && (gPlayProperties.playMode != NO_PLAYLIST) && gPlayProperties.audioFileSize > 0) { // progress for a file/stream with known size
+		} else if ((gPlayProperties.playMode != BUSY) && (gPlayProperties.playMode != NO_PLAYLIST) && gPlayProperties.audioFileDuration > 0) { // progress for a file/stream with known size
 			nextAnimation = LedAnimationType::Progress;
 		} else if (gPlayProperties.isWebstream) { // webstream animation (for streams with unknown size); pause animation is also handled by the webstream animation function
 			nextAnimation = LedAnimationType::Webstream;
