@@ -46,7 +46,7 @@
     #ifdef RFID_READER_TYPE_PN5180
         #define RFID_BUSY                   33          // PN5180 BUSY PIN
         #define RFID_RST                    22          // PN5180 RESET PIN
-        #define RFID_IRQ                    99          // Depending on your configuration this needs to be adjusted to 32.
+        #define RFID_IRQ                    32          // Depending on your configuration this needs to be adjusted to 32.
     #endif
 
     // I2S (DAC)
@@ -56,7 +56,7 @@
 
     // Rotary encoder
     #ifdef USEROTARY_ENABLE
-        //#define REVERSE_ROTARY                        // To reverse encoder's direction; switching CLK / DT in hardware does the same
+        #define REVERSE_ROTARY                        // To reverse encoder's direction; switching CLK / DT in hardware does the same
         #define ROTARYENCODER_CLK           34          // rotary encoder's CLK
         #define ROTARYENCODER_DT            39          // 39 = 'VN'; rotary encoder's DT
     #endif
@@ -109,7 +109,7 @@
 	// (optional) Monitoring of battery-voltage via ADC
 	#ifdef MEASURE_BATTERY_VOLTAGE
 		#define VOLTAGE_READ_PIN	35		        // GPIO used to monitor battery-voltage.
-		constexpr float offsetVoltage = 0.00;		// If voltage measured by ESP isn't 100% accurate, you can add a correction-value here
+		constexpr float offsetVoltage = 0.383;		// If voltage measured by ESP isn't 100% accurate, you can add a correction-value here
 		constexpr uint16_t rdiv1 = 100;			    // Rdiv1 of voltage-divider (kOhms)
 		constexpr uint16_t rdiv2 = 100;			    // Rdiv2 of voltage-divider (kOhms) => used to measure voltage via ADC!
 		constexpr adc_attenuation_t inputAttenuation = ADC_11db;		// ADC_0db (0.1->0.95V) // ADC_2_5db (0.1->1.25V) // ADC_6db (0.15->1.75V) // ADC_11db (0.14->2.45V)
